@@ -1,0 +1,68 @@
+.icon {
+    margin: 0px;
+    background-color: lightpink;
+    height: 60px; /* Increased height to accommodate text */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column; /* Stack image and text vertically */
+  }
+  
+  .icon-image {
+    height: 60px;
+  }
+  
+  .icon-text {
+    font-size: 40px; /* Adjust size as needed */
+    font-family: 'Arizonia', sans-serif /* Choose a stylish font */ !important;
+    color: lightyellow; /* Dark green color for contrast */
+    font-weight: bold; /* Bold text */
+  }
+
+  /* Reset list styles and margin/padding for consistency */
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: #333; /* Dark background for better visibility */
+}
+
+/* Horizontal layout of the navigation links */
+nav ul {
+    display: flex;
+    justify-content: center; /* Center align the links */
+    text-align: center;
+}
+
+/* Style each list item */
+nav li {
+    flex-grow: 1; /* Ensures each link takes equal space */
+}
+
+/* Style each link */
+nav a {
+    display: block; /* Makes the entire area of the list item clickable */
+    padding: 15px 20px;
+    text-decoration: none; /* Removes underline from links */
+    color: white; /* White text color */
+    font-weight: bold; /* Makes the font bold */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Hover effect */
+nav a:hover {
+    background-color: #04C2C9; /* Cyan background on hover */
+}
+
+/* Responsive behavior for smaller screens */
+@media screen and (max-width: 600px) {
+    nav ul {
+        flex-direction: column; /* Stack the links vertically on small screens */
+    }
+    
+    nav li {
+        text-align: center; /* Ensure text is centered after switching to column */
+    }
+}
+
+  
