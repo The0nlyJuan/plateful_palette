@@ -65,4 +65,51 @@ nav a:hover {
     }
 }
 
-  
+.ingredient-table {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ingredient-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ingredient-item {
+    display: flex;
+    justify-content: space-between; /* Separates the name and description */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e2e2e2;
+    color: #333;
+    background-color: #fff;
+}
+
+.ingredient-item:last-child {
+    border-bottom: none;
+}
+
+.ingredient-item:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+.ingredient-name {
+    flex: 1; /* Takes up 1/3 of the space */
+    font-weight: bold; /* Make the ingredient name bold */
+}
+
+.ingredient-description {
+    flex: 2; /* Takes up 2/3 of the space */
+    text-align: right; /* Aligns the description to the right */
+    padding-left: 20px; /* Provides some spacing between the name and description */
+}
