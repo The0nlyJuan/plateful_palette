@@ -19,14 +19,6 @@
     font-weight: bold; /* Bold text */
   }
 
-  /* Reset list styles and margin/padding for consistency */
-ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    background-color: #333; /* Dark background for better visibility */
-}
-
 /* Horizontal layout of the navigation links */
 nav ul {
     display: flex;
