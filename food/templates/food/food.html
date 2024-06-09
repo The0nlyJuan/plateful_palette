@@ -1,0 +1,28 @@
+{% extends "food/layout.html" %}
+{% block body %}
+        <h2> <a href={% url "recipe"%}>Egg fried rice</a></h2>
+        <div>
+            <h3>Ingredients:</h3>
+            <ol>
+                <li>
+                    1 egg
+                </li>
+                <li>
+                    1 tea spoonful of soy sauce
+                </li>
+                <li>
+                    1 bowl of rice
+                </li>
+            </ol>
+            <p>
+                Nutritions:
+                <ol>
+                    <li>Calories: 400 kcal</li>
+                    <li>Carbs: 30 g</li>
+                    <li>Protein: 5 g</li>
+                    <li>Fat: 5 g</li>
+                    <!--add more advanced stuff-->
+                </ol>
+            </p>
+        </div>
+{% endblock %}
