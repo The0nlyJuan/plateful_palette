@@ -30,8 +30,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+LOGIN_REDIRECT_URL = 'food:home'
+
 INSTALLED_APPS = [
     'food',
+    'guest',
     'authentication',
     'django.contrib.admin',
     'django.contrib.auth',

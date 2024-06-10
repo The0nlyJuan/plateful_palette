@@ -21,4 +21,4 @@ def user_logout(request):
     auth_logout(request)
     messages.success(request, "You have been logged out.")
     request.session['just_logged_out'] = True
-    return redirect('home')
+    return redirect('guest:home')

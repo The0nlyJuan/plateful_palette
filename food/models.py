@@ -58,4 +58,4 @@ class UserIngredient(models.Model):
         unique_together = ('user', 'ingredient')  # Ensures each user can only have each ingredient once
 
     def __str__(self):
-        return f"{self.user.username} - {self.ingredient.name}"
+        return f"{self.user.username} - {self.ingredient.description}"

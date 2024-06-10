@@ -4,21 +4,16 @@
         <h2>Input your ingredient here:</h3>
             <form method="post">
                 {% csrf_token %}
-                {{ ingredient_form.as_p }}
-                <button type="submit">Add New Ingredient</button>
-            </form>
-            
-            <form method="post">
-                {% csrf_token %}
                 {{ user_ingredient_form.as_p }}
                 <button type="submit">Add Ingredient to Your List</button>
             </form>
             
-            <ul>
+            <ol>
                 {% for user_ingredient in ingredients %}
                     <li>{{ user_ingredient.ingredient.description }}</li>
                 {% endfor %}
-            
-        <h2><a href="{% url "food" %}"> Click here to see all the foods you can make</a></h2>
+            </ol>
+        <h2><a href="{% url "food:add" %}"> Your ingredients are not in the list? Click here to add</a></h2>   
+        <h2><a href="{% url "food:food" %}"> Click here to see all the foods you can make</a></h2>
     </div>
 {% endblock %}

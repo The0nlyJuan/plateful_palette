@@ -16,11 +16,8 @@
     </div>
     <nav>
         <ul class="intro-list">
-            <li><a href="{% url "home" %}">Home</a></li>
+            <li><a href="{% url "guest:home" %}">Home</a></li>
             <li><a href="{% url "login" %}">Login</a></li>
-            <li><a href="{% url "ingredients" %}">Add Ingredients</a></li>
-            <li><a href="{% url "food" %}">Food to cook</a></li>
-            <li><a href="{% url "suggestions" %}">Suggestions</a></li>
         </ul>
     </nav>
     {% block body%}
