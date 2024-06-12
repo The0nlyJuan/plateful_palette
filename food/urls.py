@@ -6,7 +6,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("ingredients/", views.ingredients, name="ingredients"),
     path("food/", views.food, name="food"),
-    path("suggestions/", views.suggestions, name="suggestions"),
-    path("recipe/", views.recipe, name="recipe"),
-    path("add/", views.add, name="add")
+    path("add/", views.add, name="add"),
+    path("delete/<int:id>/", views.delete, name="delete"),
+    path("nutrition/<int:id>/", views.nutrition, name="nutrition")
 ]

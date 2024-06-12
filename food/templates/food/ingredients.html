@@ -11,6 +11,14 @@
             <ol>
                 {% for user_ingredient in ingredients %}
                     <li>{{ user_ingredient.ingredient.description }}</li>
+                    <form action="{% url "food:delete" user_ingredient.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit"> Delete </button>
+                    </form>
+                    <form action="{% url "food:nutrition" user_ingredient.ingredient.id %}" method="post">
+                        {% csrf_token%}
+                        <button type="submit"> Click here to see the nutrition values </button>
+                    </form>
                 {% endfor %}
             </ol>
         <h2><a href="{% url "food:add" %}"> Your ingredients are not in the list? Click here to add</a></h2>   

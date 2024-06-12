@@ -1,0 +1,273 @@
+{% extends "food/layout.html" %}
+
+{% block body %}
+<div>
+    <h1>Nutrition Information for {{ ingredient.ingredient_description }}</h1>
+    <table>
+        <tr>
+            <th>Nutrient</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Alcohol</td>
+            <td>{{ ingredient.alcohol }} g</td>
+        </tr>
+        <tr>
+            <td>Caffeine</td>
+            <td>{{ ingredient.caffeine }} mg</td>
+        </tr>
+        <tr>
+            <td>Calcium</td>
+            <td>{{ ingredient.calcium }} mg</td>
+        </tr>
+        <tr>
+            <td>Carbohydrate</td>
+            <td>{{ ingredient.carbohydrate }} g</td>
+        </tr>
+        <tr>
+            <td>Carotene, alpha</td>
+            <td>{{ ingredient.carotene_alpha }} mcg</td>
+        </tr>
+        <tr>
+            <td>Carotene, beta</td>
+            <td>{{ ingredient.carotene_beta }} mcg</td>
+        </tr>
+        <tr>
+            <td>Cholesterol</td>
+            <td>{{ ingredient.cholesterol }} mg</td>
+        </tr>
+        <tr>
+            <td>Choline, total</td>
+            <td>{{ ingredient.choline_total }} mg</td>
+        </tr>
+        <tr>
+            <td>Copper</td>
+            <td>{{ ingredient.copper }} mg</td>
+        </tr>
+        <tr>
+            <td>Cryptoxanthin, beta</td>
+            <td>{{ ingredient.cryptoxanthin_beta }} mcg</td>
+        </tr>
+        <tr>
+            <td>Energy</td>
+            <td>{{ ingredient.energy }} kcal</td>
+        </tr>
+        <tr>
+            <td>Fatty acids, total monounsaturated</td>
+            <td>{{ ingredient.fatty_acids_total_monounsaturated }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty acids, total polyunsaturated</td>
+            <td>{{ ingredient.fatty_acids_total_polyunsaturated }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty acids, total saturated</td>
+            <td>{{ ingredient.fatty_acids_total_saturated }} g</td>
+        </tr>
+        <tr>
+            <td>Fiber, total dietary</td>
+            <td>{{ ingredient.fiber_total_dietary }} g</td>
+        </tr>
+        <tr>
+            <td>Folate, DFE</td>
+            <td>{{ ingredient.folate_DFE }} mcg</td>
+        </tr>
+        <tr>
+            <td>Folate, food</td>
+            <td>{{ ingredient.folate_food }} mcg</td>
+        </tr>
+        <tr>
+            <td>Folate, total</td>
+            <td>{{ ingredient.folate_total }} mcg</td>
+        </tr>
+        <tr>
+            <td>Folic acid</td>
+            <td>{{ ingredient.folic_acid }} mcg</td>
+        </tr>
+        <tr>
+            <td>Iron</td>
+            <td>{{ ingredient.iron }} mg</td>
+        </tr>
+        <tr>
+            <td>Lutein + zeaxanthin</td>
+            <td>{{ ingredient.lutein_zeaxanthin }} mcg</td>
+        </tr>
+        <tr>
+            <td>Lycopene</td>
+            <td>{{ ingredient.lycopene }} mcg</td>
+        </tr>
+        <tr>
+            <td>Magnesium</td>
+            <td>{{ ingredient.magnesium }} mg</td>
+        </tr>
+        <tr>
+            <td>Niacin</td>
+            <td>{{ ingredient.niacin }} mg</td>
+        </tr>
+        <tr>
+            <td>Phosphorus</td>
+            <td>{{ ingredient.phosphorus }} mg</td>
+        </tr>
+        <tr>
+            <td>Potassium</td>
+            <td>{{ ingredient.potassium }} mg</td>
+        </tr>
+        <tr>
+            <td>Protein</td>
+            <td>{{ ingredient.protein }} g</td>
+        </tr>
+        <tr>
+            <td>Retinol</td>
+            <td>{{ ingredient.retinol }} mcg</td>
+        </tr>
+        <tr>
+            <td>Riboflavin</td>
+            <td>{{ ingredient.riboflavin }} mg</td>
+        </tr>
+        <tr>
+            <td>Selenium</td>
+            <td>{{ ingredient.selenium }} mcg</td>
+        </tr>
+        <tr>
+            <td>Sodium</td>
+            <td>{{ ingredient.sodium }} mg</td>
+        </tr>
+        <tr>
+            <td>Sugars, total</td>
+            <td>{{ ingredient.sugars_total }} g</td>
+        </tr>
+        <tr>
+            <td>Theobromine</td>
+            <td>{{ ingredient.theobromine }} mg</td>
+        </tr>
+        <tr>
+            <td>Thiamin</td>
+            <td>{{ ingredient.thiamin }} mg</td>
+        </tr>
+        <tr>
+            <td>Total Fat</td>
+            <td>{{ ingredient.total_fat }} g</td>
+        </tr>
+        <tr>
+            <td>Vitamin A, RAE</td>
+            <td>{{ ingredient.vitamin_A_RAE }} mcg</td>
+        </tr>
+        <tr>
+            <td>Vitamin B12</td>
+            <td>{{ ingredient.vitamin_B12 }} mcg</td>
+        </tr>
+        <tr>
+            <td>Vitamin B12, added</td>
+            <td>{{ ingredient.vitamin_B12_added }} mcg</td>
+        </tr>
+        <tr>
+            <td>Vitamin B6</td>
+            <td>{{ ingredient.vitamin_B6 }} mg</td>
+        </tr>
+        <tr>
+            <td>Vitamin C</td>
+            <td>{{ ingredient.vitamin_C }} mg</td>
+        </tr>
+        <tr>
+            <td>Vitamin D (D2 + D3)</td>
+            <td>{{ ingredient.vitamin_D_D2_D3 }} mcg</td>
+        </tr>
+        <tr>
+            <td>Vitamin E (alpha-tocopherol)</td>
+            <td>{{ ingredient.vitamin_E_alpha_tocopherol }} mg</td>
+        </tr>
+        <tr>
+            <td>Vitamin E, added</td>
+            <td>{{ ingredient.vitamin_E_added }} mg</td>
+        </tr>
+        <tr>
+            <td>Vitamin K (phylloquinone)</td>
+            <td>{{ ingredient.vitamin_K_phylloquinone }} mcg</td>
+        </tr>
+        <tr>
+            <td>Water</td>
+            <td>{{ ingredient.water }} g</td>
+        </tr>
+        <tr>
+            <td>Zinc</td>
+            <td>{{ ingredient.zinc }} mg</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 10:0</td>
+            <td>{{ ingredient.fatty_acid_10_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 12:0</td>
+            <td>{{ ingredient.fatty_acid_12_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 14:0</td>
+            <td>{{ ingredient.fatty_acid_14_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 16:0</td>
+            <td>{{ ingredient.fatty_acid_16_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 16:1</td>
+            <td>{{ ingredient.fatty_acid_16_1 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:0</td>
+            <td>{{ ingredient.fatty_acid_18_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:1</td>
+            <td>{{ ingredient.fatty_acid_18_1 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:2</td>
+            <td>{{ ingredient.fatty_acid_18_2 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:3</td>
+            <td>{{ ingredient.fatty_acid_18_3 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:4</td>
+            <td>{{ ingredient.fatty_acid_18_4 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 20:1</td>
+            <td>{{ ingredient.fatty_acid_20_1 }} g</td>
+        <tr>
+            <td>Fatty Acid 20:4</td>
+            <td>{{ ingredient.fatty_acid_20_4 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 20:5 n-3</td>
+            <td>{{ ingredient.fatty_acid_20_5_n3 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:1</td>
+            <td>{{ ingredient.fatty_acid_22_1 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:5 n-3</td>
+            <td>{{ ingredient.fatty_acid_22_5_n3 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:6 n-3</td>
+            <td>{{ ingredient.fatty_acid_22_6_n3 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 4:0</td>
+            <td>{{ ingredient.fatty_acid_4_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 6:0</td>
+            <td>{{ ingredient.fatty_acid_6_0 }} g</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 8:0</td>
+            <td>{{ ingredient.fatty_acid_8_0 }} g</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
+    

@@ -8,3 +8,4 @@ def home(request):
         'just_logged_out': just_logged_out
     }
     return render(request, 'guest/home.html', context)
+
