@@ -19,7 +19,7 @@ class Command(BaseCommand):
                     food_code=row['Food code'],
                     defaults={
                         'food_description': row['Main food description'],
-                        'food_additional_description': row.get('Food_additional_description', None)
+                        'food_additional_description': row.get('Additional food description', None)
                     }
                 )
         self.stdout.write(self.style.SUCCESS('Successfully loaded foods'))

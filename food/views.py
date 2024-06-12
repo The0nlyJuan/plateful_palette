@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .models import Ingredient, UserIngredient
+from .models import Ingredient, UserIngredient, Foods, FoodToIngredient
 from .forms import NewIngredientForm, AddUserIngredientForm
 from django.contrib.auth.decorators import login_required
 
@@ -37,8 +37,11 @@ def ingredients(request):
     })
 
 @login_required
-def food(request):
-    return render(request, "food/food.html")
+def food(request, id):
+    food = Foods.objects.get(pk = id)
+    return render(request, "food/food.html",{
+        "food": food
+    })
 
 @login_required
 def add(request):
@@ -51,7 +54,7 @@ def add(request):
     else:
         ingredient_form = NewIngredientForm()
     return render(request, "food/add.html",{
-        "ingredient_form": ingredient_form,
+        "ingredient_form": ingredient_form
     })
 
 @login_required
@@ -61,8 +64,10 @@ def delete(request, id):
         ingredient.delete()
     return redirect('food:ingredients')
 
+@login_required
 def nutrition(request, id):
     nutrition_value = Ingredient.objects.get(pk=id)
     return render(request, "food/nutrition.html",{
-        "nutrition_value": nutrition_value
+        "ingredient": nutrition_value
     })
+

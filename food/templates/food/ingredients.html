@@ -1,27 +1,26 @@
 {% extends "food/layout.html" %}
-{% block  body%}
+{% block body %}
     <div>
-        <h2>Input your ingredient here:</h3>
-            <form method="post">
-                {% csrf_token %}
-                {{ user_ingredient_form.as_p }}
-                <button type="submit">Add Ingredient to Your List</button>
-            </form>
-            
-            <ol>
-                {% for user_ingredient in ingredients %}
-                    <li>{{ user_ingredient.ingredient.description }}</li>
-                    <form action="{% url "food:delete" user_ingredient.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit"> Delete </button>
-                    </form>
-                    <form action="{% url "food:nutrition" user_ingredient.ingredient.id %}" method="post">
-                        {% csrf_token%}
-                        <button type="submit"> Click here to see the nutrition values </button>
-                    </form>
-                {% endfor %}
-            </ol>
-        <h2><a href="{% url "food:add" %}"> Your ingredients are not in the list? Click here to add</a></h2>   
-        <h2><a href="{% url "food:food" %}"> Click here to see all the foods you can make</a></h2>
+        <h2>Input your ingredient here:</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ user_ingredient_form.as_p }}
+            <button type="submit">Add Ingredient to Your List</button>
+        </form>
+        
+        <ol>
+            {% for user_ingredient in ingredients %}
+                <li>{{ user_ingredient.ingredient.ingredient_description }}</li>
+                <form action="{% url 'food:delete' user_ingredient.ingredient.ingredient_code %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="{% url 'food:nutrition' user_ingredient.ingredient.ingredient_code %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Click here to see the nutrition values</button>
+                </form>
+            {% endfor %}
+        </ol>
+        <h2><a href="{% url 'food:add' %}">Your ingredients are not in the list? Click here to add</a></h2>   
     </div>
 {% endblock %}

@@ -83,7 +83,7 @@ class UserIngredient(models.Model):
         unique_together = ('user', 'ingredient')  # Ensures each user can only have each ingredient once
 
     def __str__(self):
-        return f"{self.user.username} - {self.ingredient.description}"
+        return f"{self.user.username} - {self.ingredient.ingredient_description}"
     
 class Foods(models.Model):
     food_code = models.IntegerField(primary_key=True)
@@ -98,7 +98,6 @@ class FoodToIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     seq_num = models.IntegerField()
     ingredient_weight = models.FloatField(null=True)
-
     def __str__(self):
         return f"{self.food.food_description} - {self.ingredient.ingredient_description}"
 
