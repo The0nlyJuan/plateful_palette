@@ -1,0 +1,52 @@
+{% extends "food/layout.html" %}
+{% load filters %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>{{ name }}</h1>
+    
+    <div class="section mt-4">
+        <h2>Ingredients</h2>
+        {% for sublist in ingredients %}
+                <ul>
+                    {% for item in sublist %}
+                        {% if item|startswith:"=" %}
+                        <h4> {{item| cookbook| header}}</h4>
+                        {% else%}
+                        <li><h6>{{item | cookbook| ingredient}}</h3></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+        {% endfor %}
+    </div>
+
+    <div class="section mt-4">
+        <h2>Procedures</h2>
+        {% for sublist in procedures %}
+            
+                <ol>
+                    {% for step in sublist %}
+                        {% if step|startswith:"=" %}
+                        <h4> {{step| cookbook| header}}</h4>
+                        {% else%}
+                        <li><h6>{{step | cookbook| procedure}}</h6></li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+        {% endfor %}
+    </div>
+
+    <div class="section mt-4">
+        <h2>Notes</h2>
+        <ul>
+            {% for item in notes %}
+                {% if item|startswith:"=" %}
+                <h4> {{item| cookbook| header}}</h4>
+                {% else%}
+                <li><h6>{{item | cookbook| ingredient}}</h6></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

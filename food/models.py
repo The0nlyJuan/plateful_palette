@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-class Ingredient(models.Model):
+class Nutrition(models.Model):
     ingredient_code = models.IntegerField(primary_key=True)
     ingredient_description = models.CharField(max_length=255)
     alcohol = models.FloatField(null=True, blank=True)
@@ -73,6 +73,12 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.ingredient_description
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
 
 class UserIngredient(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -85,19 +91,18 @@ class UserIngredient(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.ingredient.ingredient_description}"
     
-class Foods(models.Model):
-    food_code = models.IntegerField(primary_key=True)
-    food_description = models.CharField(max_length=300)
-    food_additional_description = models.CharField(max_length=300, null=True, blank=True)
+class Food(models.Model):
+    title = models.CharField(max_length=255)
+    ingredients = models.ManyToManyField('Ingredient', related_name='foods')
 
     def __str__(self):
-        return self.food_description
-    
-class FoodToIngredient(models.Model):
-    food = models.ForeignKey(Foods, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    seq_num = models.IntegerField()
-    ingredient_weight = models.FloatField(null=True)
+        return self.title
+
+class UserFood(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+
     def __str__(self):
-        return f"{self.food.food_description} - {self.ingredient.ingredient_description}"
+        return f"{self.user.username} - {self.food.title}"
+
 

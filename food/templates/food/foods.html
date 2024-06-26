@@ -1,0 +1,12 @@
+{% extends "food/layout.html" %}
+
+{% block body %}
+    <h2>Foods You Can Make</h2>
+    <ul>
+        {% for food, counts in foods %}
+            <li>
+                <a href="{% url "food:food_item" food %}">{{food}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

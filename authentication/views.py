@@ -10,7 +10,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # Automatically log in the user after registration
-            return redirect('food:ingredients')
+            return redirect('food:home')
     else:
         form = UserRegisterForm()
     return render(request, 'authentication/register.html', {'form': form})
