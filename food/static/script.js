@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const ingredientInput = document.getElementById('ingredientInput');
     const dropdown = document.getElementById('ingredientDropdown');
-    const addIngredientButton = document.getElementById('addIngredientButton');
     const allIngredients = document.querySelectorAll('#allIngredients .hidden-item');
 
     // Function to show/hide dropdown items based on input
@@ -10,6 +9,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const filter = ingredientInput.value.toLowerCase();
         dropdown.innerHTML = '';
         let count = 0;
+
+        //make sure the dropdown shuts off when there is no character inside
+        if (filter.length === 0){
+            dropdown.style.display = 'none';
+            return;
+        }
 
         allIngredients.forEach(item => {
             const text = item.getAttribute('data-name').toLowerCase();
@@ -21,6 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 dropdown.appendChild(newItem);
                 count++;
             }
+        
         });
 
         dropdown.style.display = count > 0 ? 'block' : 'none';

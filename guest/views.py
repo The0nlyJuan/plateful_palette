@@ -9,3 +9,4 @@ def home(request):
     }
     return render(request, 'guest/home.html', context)
 
+

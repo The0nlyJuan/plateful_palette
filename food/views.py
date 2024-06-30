@@ -30,9 +30,11 @@ def get_foods_for_ingredient(ingredient):
             search_results = data.get('query', {}).get('search', [])
             for result in search_results:
                 food_title = result['title']
-                food, created = Food.objects.get_or_create(title=food_title)
-                food.ingredients.add(ingredient_obj)
-                food.save()
+                ingredient_name = Ingredient.objects.filter(name=food_title.split(':', 1)[1])
+                if not ingredient_name:
+                    food, created = Food.objects.get_or_create(title=food_title)
+                    food.ingredients.add(ingredient_obj)
+                    food.save()
             foods = ingredient_obj.foods.all()
         else:
             print(f"Failed to get data for ingredient: {ingredient}")
