@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'plateful_palette.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'platefulpalette',
-        'USER': 'admin',
-        'PASSWORD': 'Sdr1997a',
-        'HOST': 'localhost',
-        'PORT': ''
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
