@@ -25,7 +25,7 @@ SECRET_KEY = ')pqlc6+(%5u9x@cqb+qqc%kmhfnypk6n(#eqq4v$ub-%yvx132'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.22.5.9', 'localhost']
 
 
 # Application definition
@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'plateful_palette.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'platefulpalette',
+        'USER': 'admin',
+        'PASSWORD': 'Sdr1997a',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
@@ -123,3 +127,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+import os 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
