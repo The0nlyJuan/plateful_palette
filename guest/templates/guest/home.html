@@ -1,16 +1,46 @@
 {% extends "guest/layout.html" %}
-{% block  body%}
-    <section class="welcome">
-        <h1>Welcome to Plateful Palette!</h1>
-        <p>Discover new recipes and track your culinary adventures.</p>
-    </section>
-    <section class="about">
-        <h2>About Us</h2>
-        <p>Learn more about our mission to make cooking accessible and fun for everyone.</p>
-    </section>
-    <script> 
-        {% if just_logged_out%}
-            alert("Logged out successfully")
-        {% endif %}
-    </script>
-{% endblock%}
+{% load static %}
+{% block body %}
+<section id="about">
+    <h1>Welcome to Plateful Palette</h1> 
+    <h2>where your pantry becomes your passport to delicious and nutritious meals</h2>
+    <div class="item">
+        <img src="{% static 'intro.webp' %}">
+        <p>We aspire to make cooking foods easy for everyone, regardless of your dietary restriction. With all the ingredients input, you will get recommendation of which foods you can cook</p>
+        <a href="{% url "login" %}"> Click here to login/register </a>
+    </div>
+    <h3>Who are we</h3>
+    <div class="item">
+        <img src="{% static 'who.jpeg' %}">
+        <p>We are a group of 2 University Students who have a passion for cooking and want to make a change to the rampant food wastage around the world. We leverage on advanced technology to make cooking accessible, enjoyable, and environmentally friendly. Our app intelligently suggests recipes based on the ingredients you already have, helping you reduce food waste and discover new dishes effortlessly.</p>
+    </div>
+    <h3>We are committed to:</h3>
+    <div class="commitment-box">
+        <div class="commitment-item">
+            <strong>Enhancing Nutritional Awareness:</strong>
+            <p>Providing detailed nutritional information for each recipe, helping you make informed dietary choices that fit your health goals.</p>
+        </div>
+        <div class="commitment-item">
+            <strong>Reducing Food Waste:</strong>
+            <p>Encouraging the use of available ingredients to minimize waste and promote sustainability.</p>
+        </div>
+        <div class="commitment-item">
+            <strong>Fostering Culinary Creativity:</strong>
+            <p>Inspiring users to experiment with diverse ingredients and cuisines, expanding their culinary horizons.</p>
+        </div>
+        <div class="commitment-item">
+            <strong>Building Community:</strong>
+            <p>Creating a platform where users can share their culinary experiences and tips, fostering a community of supportive, like-minded individuals.</p>
+        </div>
+        <div class="commitment-item">
+            <strong>Simplifying Meal Planning:</strong>
+            <p>Streamlining the meal planning process with tools for organizing weekly meals and generating shopping lists, making healthy eating convenient for everyone.</p>
+        </div>
+    </div>
+</section>
+<script> 
+    {% if just_logged_out%}
+        alert("Logged out successfully")
+    {% endif %}
+</script>
+{% endblock %}

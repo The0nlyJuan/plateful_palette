@@ -1,22 +1,22 @@
 .icon-image {
     height: 60px;
     padding-right: 3rem;
-  }
-  
+}
+
 .icon-text {
     display: flex;
     align-items: center;
     font-size: 40px; /* Adjust size as needed */
-    font-family: 'Arizonia', sans-serif /* Choose a stylish font */ !important;
-    color: rgb(235, 124, 14); /* Dark green color for contrast */
+
+    font-family: 'Arizonia', sans-serif; /* Choose a stylish font */ /* !important should be placed before the semicolon */
+    color: rgba(243, 159, 5, 0.932); /* Dark green color for contrast */
+
     font-weight: bold; /* Bold text */
     padding: 0;
     margin: 0;
 }
 
-
-
-nav{
+nav {
     font-size: 120%;
     padding: 0;
     margin: 0;
@@ -30,15 +30,15 @@ nav ul {
     margin: 0;
     padding: 0;
     flex-flow: row wrap;
-    background-color: rgb(53, 10, 10);
+    background-color: #f9f1ee;
 }
 
-nav li{
+nav li {
     display: flex;
     align-items: center;
 }
 
-nav li:first-child{
+nav li:first-child {
     flex-basis: 100%;
     text-align: center;
     padding: 0;
@@ -47,21 +47,19 @@ nav li:first-child{
     justify-content: center;
 }
 
-
-
-
 /* Style each link */
 nav a {
     display: block; /* Makes the entire area of the list item clickable */
     padding: 15px 20px;
     text-decoration: none; /* Removes underline from links */
-    color: rgb(236, 205, 205); /* White text color */
+    color: #f57970; /* White text color */
+    font-weight: bold;
     transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 /* Hover effect */
 nav a:hover {
-    background-color: #04C2C9; /* Cyan background on hover */
+    background-color: #68d1d4; /* Cyan background on hover */
 }
 
 /* Responsive behavior for smaller screens */
@@ -69,12 +67,13 @@ nav a:hover {
     nav {
         margin: 0 auto;
         padding: 0;
-      }
-      nav li:first-child {
+    }
+
+    nav li:first-child {
         flex-basis: auto;
         text-align: left;
         margin-right: auto;
-      }
+    }
 }
 
 .ingredient-table {
@@ -124,5 +123,104 @@ nav a:hover {
     flex: 2; /* Takes up 2/3 of the space */
     text-align: right; /* Aligns the description to the right */
     padding-left: 20px; /* Provides some spacing between the name and description */
+}
+
+#about {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#about p{
+    margin-bottom: 1rem;
+}
+
+#about a{
+    text-decoration-line: none;
+    border-width: 2px;
+    background-color: blue;
+    color: white;
+    padding: 0.5rem 0.5rem;
+}
+
+#about h1 {
+    text-align: center;
+}
+
+#about h2 {
+    text-align: center;
+    font-weight: lighter;
+    font-size: 100%;
+}
+
+#about .item {
+    display: block;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 3rem;
+    background-color: #f9f1ee;
+}
+
+img {
+    height: auto;
+    border-radius: 10px;
+    width: 60%;
+}
+
+.text-content {
+    flex: 1;
+    text-align: left;
+    padding: 20px;
+    background-color: #fafafa; /* Light background for the text */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#about p {
+    display: block;
+    color: black; /* Slightly lighter color for text */
+    font-size: 200%;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+}
+
+h3 {
+    flex-basis: 100%; /* Make h3 take full width */
+    text-align: center;
+    margin-bottom: 20px; /* Add some space below the header */
+}
+
+.commitment-box {
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.commitment-box h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.commitment-item {
+    margin-bottom: 20px;
+}
+
+#about .commitment-item strong {
+    display: block;
+    font-size: 110%;
+    margin-bottom: 10px;
+}
+
+#about .commitment-item p {
+    margin: 0;
+    color: #666;
+    font-size: 90%;
 }
 
