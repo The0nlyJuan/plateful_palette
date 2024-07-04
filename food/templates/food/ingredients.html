@@ -2,7 +2,7 @@
 {% block body %}
     <div>
         <h2>Input your ingredient here:</h2>
-        <form action="{% url "food:ingredients"%}" method="post">
+        <form action="{% url "food:ingredients" %}" method="post">
             {% csrf_token %}
             <label for="ingredientInput">Ingredient:</label>
             <input type="text" name="name" maxlength="255" required id="ingredientInput" placeholder="Type an ingredient" autocomplete="off">
@@ -20,22 +20,28 @@
         </ul>
 
         <ol>
-            {% for user_ingredient in ingredients %}
-                <li>{{ user_ingredient.ingredient.name }}</li>
-                <form action="{% url 'food:delete' user_ingredient.ingredient.name %}" method="post">
+            {% for item in ingredients %}
+                <li>{{ item.ingredient.ingredient.name }}</li>
+                <!-- Dropdown for each ingredient variation -->
+                <select name="ingredient_variation">
+                    {% for variation in item.variations %}
+                        
+                        <option value="{{ variation.ingredient_description }}">{{ variation.ingredient_description }}</option>
+                    {% endfor %}
+                </select>
+                <!-- delete button-->
+                <form action="{% url 'food:delete' item.ingredient.ingredient.name %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit">Delete</button>
                 </form>
-                <!--
-                <form action="{% url 'food:nutrition' user_ingredient.ingredient.id %}" method="post">
+                <!-- Uncomment if needed
+                <form action="{% url 'food:nutrition' item.ingredient.ingredient.id %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit">Click here to see the nutrition values</button>
                 </form>
                 -->
             {% endfor %}
         </ol>
-        <a href="{% url "food:foods" %}"> Click here to see all the foods you can make </a>
-
-        <!--<h2><a href="{% url 'food:add' %}">Your ingredients are not in the list? Click here to add</a></h2>-->
+        <a href="{% url "food:foods" %}">Click here to see all the foods you can make</a>
     </div>
 {% endblock %}

@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = 'Load ingredients from CSV file'
 
     def handle(self, *args, **kwargs):
-        with open("E:/Orbital/plateful_palette/nutrition.csv", 'r') as file:  # Replace with the actual path to your CSV file
+        with open("E:/Orbital/plateful_palette/nutrition_split.csv", 'r') as file:  # Replace with the actual path to your CSV file
             reader = csv.DictReader(file)
             for row in reader:
                 try:
@@ -78,6 +78,9 @@ class Command(BaseCommand):
                         fatty_acid_4_0=row['4:0'] or None,
                         fatty_acid_6_0=row['6:0'] or None,
                         fatty_acid_8_0=row['8:0'] or None,
+                        ingredient_description_first=row["ingredient_description_first"] or None,
+                        ingredient_description_second = row["ingredient_description_second"] or None,
+                        ingredient_description_third = row["ingredient_description_third"] or None
                     )
                 except Exception as e:
                     self.stdout.write(self.style.WARNING(f"Skipping duplicate ingredient_code {row['ingredient_code']}: {str(e)}"))

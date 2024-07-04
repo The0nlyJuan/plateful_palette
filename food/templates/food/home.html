@@ -2,10 +2,19 @@
 {% block  body%}
     <section class="welcome">
         <h1>Welcome to Plateful Palette!</h1>
-        <p>Discover new recipes and track your culinary adventures.</p>
+        <p>Join us to create new recipes and track your culinary adventures.</p>
     </section>
-    <section class="about">
-        <h2>About Us</h2>
-        <p>Learn more about our mission to make cooking accessible and fun for everyone.</p>
-    </section>
+    <div class="intro-template">
+        <article>
+            <img>
+            <a href="{% url "food:ingredients" %}"> <h3> Adding your ingredients</h3> </a>
+            <h4> Having a lot of things in your fridge, but don't know what to cook? Click here to input your ingredients and find amazing recipe</h4>
+        </article>
+        <article>
+            <img>
+            <a href="{% url "food:foods" %}" ><h3> Explore foods </h3> </a>
+            <h4> Already input the foods? Click here to see which delicious foods you can make </h4>
+        </article>
+
+    </div>
 {% endblock%}

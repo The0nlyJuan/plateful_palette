@@ -69,6 +69,9 @@ class Nutrition(models.Model):
     fatty_acid_4_0 = models.FloatField(null=True, blank=True)  # 4:0
     fatty_acid_6_0 = models.FloatField(null=True, blank=True)  # 6:0
     fatty_acid_8_0 = models.FloatField(null=True, blank=True)  # 8:0
+    ingredient_description_first= models.CharField(max_length=255, null= True, blank=True)
+    ingredient_description_second = models.CharField(max_length=255, null= True, blank=True)
+    ingredient_description_third = models.CharField(max_length=255, null= True, blank=True)
 
     def __str__(self):
         return self.ingredient_description
