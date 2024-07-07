@@ -2,10 +2,23 @@
 {% block  body%}
     <section class="welcome">
         <h1>Welcome to Plateful Palette!</h1>
-        <p>Welcome to Plateful Palette, where your pantry becomes your passport to delicious and nutritious meals. Our innovative app is designed to transform the way you think about cooking and meal planning. Whether you're a busy professional looking for quick meal solutions, a health enthusiast aiming to maintain a balanced diet, or a curious chef eager to explore new culinary worlds, Plateful Palette is your ideal kitchen companion.</p>
+        <p>This is where your pantry becomes your passport to delicious and nutritious meals. Our innovative app is designed to transform the way you think about cooking and meal planning. Whether you're a busy professional looking for quick meal solutions, a health enthusiast aiming to maintain a balanced diet, or a curious chef eager to explore new culinary worlds, Plateful Palette is your ideal kitchen companion.</p>
     </section>
     <section class="about">
         <h2>About Us</h2>
         <p>We are a group of 2 University Students who have a passion for cooking and want to make a change to the rampant food wastage around the world. We leverage on advanced technology to make cooking accessible, enjoyable, and environmentally friendly. Our app intelligently suggests recipes based on the ingredients you already have, helping you reduce food waste and discover new dishes effortlessly.</p>
     </section>
+    <div class="intro-template">
+        <article>
+            <img>
+            <a href="{% url "food:ingredients" %}"> <h3> Adding your ingredients</h3> </a>
+            <h4> Having a lot of things in your fridge, but don't know what to cook? Click here to input your ingredients and find amazing recipe</h4>
+        </article>
+        <article>
+            <img>
+            <a href="{% url "food:foods" %}" ><h3> Explore foods </h3> </a>
+            <h4> Already input the foods? Click here to see which delicious foods you can make </h4>
+        </article>
+
+    </div>
 {% endblock%}

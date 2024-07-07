@@ -16,6 +16,14 @@
     margin: 0;
 }
 
+
+h3{
+    font-weight: normal;
+}
+
+h4{
+    font-weight: normal;
+}
 nav {
     font-size: 120%;
     padding: 0;
@@ -223,4 +231,42 @@ h3 {
     color: #666;
     font-size: 90%;
 }
+
+.welcome{
+    justify-items: center;
+    text-align: center;
+    align-items: center;
+    font-size: 120%;
+}
+
+.welcome h1{
+    margin-top: 1rem;
+    margin-bottom:0;
+}
+
+.welcome p{
+    font-size: 100%;
+    font-style: italic;
+    color: rgb(249, 164, 178);
+    font-weight: 140;
+    margin: 0 ;
+}
+
+.intro-template{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.intro-template h4{
+    font-weight: normal;
+}
+
+.intro-template article{
+    margin: 1rem;
+    background-color: pink;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+
 
