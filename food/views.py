@@ -155,18 +155,19 @@ def format_table(table):
     return "\n".join(formatted_table)
 
 def search_ingredient_by_name(ingredient_name):
-    print(ingredient_name)
     matches = Nutrition.objects.filter(ingredient_description_first__icontains=ingredient_name)
-    print(matches)
     if not matches.exists():
-        print(matches)
         matches = Nutrition.objects.filter(ingredient_description_second__icontains=ingredient_name)
     if not matches.exists():
-        print(matches)
         matches = Nutrition.objects.filter(ingredient_description_third__icontains=ingredient_name)
-    df = pd.DataFrame(list(matches.values()))
-    return df
-
+    match_values = list(matches.values('pk', 'ingredient_description'))
+    
+    # Extract the ids and descriptions into separate lists
+    ids = [match['pk'] for match in match_values]
+    descriptions = [match['ingredient_description'] for match in match_values]
+    print(ids)
+    print(descriptions)
+    return ids, descriptions
 # Create your views here.
 @login_required
 def home(request):
@@ -247,52 +248,19 @@ def ingredients(request):
 
         return redirect('food:ingredients')
 
+
     return render(request, "food/ingredients.html", {
         'ingredients': [
             {
                 'ingredient': ui,
-                'variations': search_ingredient_by_name(ui.ingredient.name)  # Assuming get_variations() returns a list of variations
+                'variations_index': search_ingredient_by_name(ui.ingredient.name)[0],
+                "variations_name": search_ingredient_by_name(ui.ingredient.name)[1]
             }
             for ui in user_ingredients
         ],
         'all_ingredients': all_ingredients,
     })
 
-@login_required
-def ingredients(request):
-    all_ingredients = Ingredient.objects.all()
-    user_ingredients = UserIngredient.objects.filter(user=request.user)
-
-    if request.method == 'POST':
-        ingredient_name = request.POST.get('name')
-
-        # Check if the ingredient is already in user's ingredients
-        if user_ingredients.filter(ingredient__name=ingredient_name).exists():
-            return redirect('food:ingredients')  # Do nothing if it exists
-
-        # Check if the ingredient is in all ingredients
-        if all_ingredients.filter(name=ingredient_name).exists():
-            ingredient = all_ingredients.get(name=ingredient_name)
-            UserIngredient.objects.get_or_create(user=request.user, ingredient=ingredient)
-
-        return redirect('food:ingredients')
-
-    # Prepare the context with variations for each user ingredient
-    ingredients_with_variations = []
-    for ui in user_ingredients:
-        variations_df = search_ingredient_by_name(ui.ingredient.name)
-        variations_dict = variations_df.to_dict(orient='records')  # Convert DataFrame to list of dicts
-        ingredients_with_variations.append({
-            'ingredient': ui,
-            'variations': variations_dict
-        })
-
-    context = {
-        'ingredients': ingredients_with_variations,
-        'all_ingredients': all_ingredients,
-    }
-
-    return render(request, "food/ingredients.html", context)
 
 
 @login_required
