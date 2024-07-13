@@ -161,13 +161,15 @@ def search_ingredient_by_name(ingredient_name):
     if not matches.exists():
         matches = Nutrition.objects.filter(ingredient_description_third__icontains=ingredient_name)
     match_values = list(matches.values('pk', 'ingredient_description'))
+
+    # Combine ids and descriptions into a list of dictionaries
+    variations = [{'id': match['pk'], 'description': match['ingredient_description']} for match in match_values]
     
-    # Extract the ids and descriptions into separate lists
-    ids = [match['pk'] for match in match_values]
-    descriptions = [match['ingredient_description'] for match in match_values]
-    print(ids)
-    print(descriptions)
-    return ids, descriptions
+    print(variations)
+    return variations
+
+
+
 # Create your views here.
 @login_required
 def home(request):
@@ -253,13 +255,13 @@ def ingredients(request):
         'ingredients': [
             {
                 'ingredient': ui,
-                'variations_index': search_ingredient_by_name(ui.ingredient.name)[0],
-                "variations_name": search_ingredient_by_name(ui.ingredient.name)[1]
+                'variations': search_ingredient_by_name(ui.ingredient.name),
             }
             for ui in user_ingredients
         ],
         'all_ingredients': all_ingredients,
     })
+
 
 
 
@@ -313,11 +315,18 @@ def food_item(request, name):
         })
 
 @login_required
-def nutrition(request, name):
-    ingredients = search_ingredient_by_name(name)
-    return render(request, "food/nutrition.html",{
-        "ingredients": ingredients["ingredient_description"].values.tolist()
-    })
+def nutrition(request):
+    if request.method == "POST":
+        id = request.POST.get("ingredient_variation")
+        nutrition_info = get_object_or_404(Nutrition, pk=id)
+        
+        # Render the nutrition information to a template
+        return render(request, 'food/nutrition.html', {
+            'nutrition_info': nutrition_info,
+        })
+    else:
+        # Handle GET request if needed, otherwise, redirect or show an error
+        return redirect('food:ingredients')
 """
 
 class NewIngredientsForm(forms.Form):

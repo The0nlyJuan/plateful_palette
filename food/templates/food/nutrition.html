@@ -1,12 +1,275 @@
 {% extends "food/layout.html" %}
 
 {% block body %}
-<div>
-    <h2>Select an Ingredient</h2>
-    <select name="ingredients" id="ingredients-dropdown">
-        {% for ingredient in ingredients %}
-            <option value="{{ ingredient }}">{{ ingredient }}</option>
-        {% endfor %}
-    </select>
-</div>
+    <h1>Nutrition Information</h1>
+    <p><strong>Ingredient:</strong> {{ nutrition_info.ingredient_description }}</p>
+    <table>
+        <tr>
+            <th>Nutrient</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Alcohol</td>
+            <td>{{ nutrition_info.alcohol }}</td>
+        </tr>
+        <tr>
+            <td>Caffeine</td>
+            <td>{{ nutrition_info.caffeine }}</td>
+        </tr>
+        <tr>
+            <td>Calcium</td>
+            <td>{{ nutrition_info.calcium }}</td>
+        </tr>
+        <tr>
+            <td>Carbohydrate</td>
+            <td>{{ nutrition_info.carbohydrate }}</td>
+        </tr>
+        <tr>
+            <td>Carotene Alpha</td>
+            <td>{{ nutrition_info.carotene_alpha }}</td>
+        </tr>
+        <tr>
+            <td>Carotene Beta</td>
+            <td>{{ nutrition_info.carotene_beta }}</td>
+        </tr>
+        <tr>
+            <td>Cholesterol</td>
+            <td>{{ nutrition_info.cholesterol }}</td>
+        </tr>
+        <tr>
+            <td>Choline Total</td>
+            <td>{{ nutrition_info.choline_total }}</td>
+        </tr>
+        <tr>
+            <td>Copper</td>
+            <td>{{ nutrition_info.copper }}</td>
+        </tr>
+        <tr>
+            <td>Cryptoxanthin Beta</td>
+            <td>{{ nutrition_info.cryptoxanthin_beta }}</td>
+        </tr>
+        <tr>
+            <td>Energy</td>
+            <td>{{ nutrition_info.energy }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acids Total Monounsaturated</td>
+            <td>{{ nutrition_info.fatty_acids_total_monounsaturated }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acids Total Polyunsaturated</td>
+            <td>{{ nutrition_info.fatty_acids_total_polyunsaturated }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acids Total Saturated</td>
+            <td>{{ nutrition_info.fatty_acids_total_saturated }}</td>
+        </tr>
+        <tr>
+            <td>Fiber Total Dietary</td>
+            <td>{{ nutrition_info.fiber_total_dietary }}</td>
+        </tr>
+        <tr>
+            <td>Folate DFE</td>
+            <td>{{ nutrition_info.folate_DFE }}</td>
+        </tr>
+        <tr>
+            <td>Folate Food</td>
+            <td>{{ nutrition_info.folate_food }}</td>
+        </tr>
+        <tr>
+            <td>Folate Total</td>
+            <td>{{ nutrition_info.folate_total }}</td>
+        </tr>
+        <tr>
+            <td>Folic Acid</td>
+            <td>{{ nutrition_info.folic_acid }}</td>
+        </tr>
+        <tr>
+            <td>Iron</td>
+            <td>{{ nutrition_info.iron }}</td>
+        </tr>
+        <tr>
+            <td>Lutein Zeaxanthin</td>
+            <td>{{ nutrition_info.lutein_zeaxanthin }}</td>
+        </tr>
+        <tr>
+            <td>Lycopene</td>
+            <td>{{ nutrition_info.lycopene }}</td>
+        </tr>
+        <tr>
+            <td>Magnesium</td>
+            <td>{{ nutrition_info.magnesium }}</td>
+        </tr>
+        <tr>
+            <td>Niacin</td>
+            <td>{{ nutrition_info.niacin }}</td>
+        </tr>
+        <tr>
+            <td>Phosphorus</td>
+            <td>{{ nutrition_info.phosphorus }}</td>
+        </tr>
+        <tr>
+            <td>Potassium</td>
+            <td>{{ nutrition_info.potassium }}</td>
+        </tr>
+        <tr>
+            <td>Protein</td>
+            <td>{{ nutrition_info.protein }}</td>
+        </tr>
+        <tr>
+            <td>Retinol</td>
+            <td>{{ nutrition_info.retinol }}</td>
+        </tr>
+        <tr>
+            <td>Riboflavin</td>
+            <td>{{ nutrition_info.riboflavin }}</td>
+        </tr>
+        <tr>
+            <td>Selenium</td>
+            <td>{{ nutrition_info.selenium }}</td>
+        </tr>
+        <tr>
+            <td>Sodium</td>
+            <td>{{ nutrition_info.sodium }}</td>
+        </tr>
+        <tr>
+            <td>Sugars Total</td>
+            <td>{{ nutrition_info.sugars_total }}</td>
+        </tr>
+        <tr>
+            <td>Theobromine</td>
+            <td>{{ nutrition_info.theobromine }}</td>
+        </tr>
+        <tr>
+            <td>Thiamin</td>
+            <td>{{ nutrition_info.thiamin }}</td>
+        </tr>
+        <tr>
+            <td>Total Fat</td>
+            <td>{{ nutrition_info.total_fat }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin A RAE</td>
+            <td>{{ nutrition_info.vitamin_A_RAE }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin B12</td>
+            <td>{{ nutrition_info.vitamin_B12 }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin B12 Added</td>
+            <td>{{ nutrition_info.vitamin_B12_added }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin B6</td>
+            <td>{{ nutrition_info.vitamin_B6 }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin C</td>
+            <td>{{ nutrition_info.vitamin_C }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin D D2 D3</td>
+            <td>{{ nutrition_info.vitamin_D_D2_D3 }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin E Alpha Tocopherol</td>
+            <td>{{ nutrition_info.vitamin_E_alpha_tocopherol }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin E Added</td>
+            <td>{{ nutrition_info.vitamin_E_added }}</td>
+        </tr>
+        <tr>
+            <td>Vitamin K Phylloquinone</td>
+            <td>{{ nutrition_info.vitamin_K_phylloquinone }}</td>
+        </tr>
+        <tr>
+            <td>Water</td>
+            <td>{{ nutrition_info.water }}</td>
+        </tr>
+        <tr>
+            <td>Zinc</td>
+            <td>{{ nutrition_info.zinc }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 10:0</td>
+            <td>{{ nutrition_info.fatty_acid_10_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 12:0</td>
+            <td>{{ nutrition_info.fatty_acid_12_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 14:0</td>
+            <td>{{ nutrition_info.fatty_acid_14_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 16:0</td>
+            <td>{{ nutrition_info.fatty_acid_16_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 16:1</td>
+            <td>{{ nutrition_info.fatty_acid_16_1 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:0</td>
+            <td>{{ nutrition_info.fatty_acid_18_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:1</td>
+            <td>{{ nutrition_info.fatty_acid_18_1 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:2</td>
+            <td>{{ nutrition_info.fatty_acid_18_2 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:3</td>
+            <td>{{ nutrition_info.fatty_acid_18_3 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 18:4</td>
+            <td>{{ nutrition_info.fatty_acid_18_4 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 20:1</td>
+            <td>{{ nutrition_info.fatty_acid_20_1 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 20:4</td>
+            <td>{{ nutrition_info.fatty_acid_20_4 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 20:5 n-3</td>
+            <td>{{ nutrition_info.fatty_acid_20_5_n3 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:1</td>
+            <td>{{ nutrition_info.fatty_acid_22_1 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:5 n-3</td>
+            <td>{{ nutrition_info.fatty_acid_22_5_n3 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 22:6 n-3</td>
+            <td>{{ nutrition_info.fatty_acid_22_6_n3 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 4:0</td>
+            <td>{{ nutrition_info.fatty_acid_4_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 6:0</td>
+            <td>{{ nutrition_info.fatty_acid_6_0 }}</td>
+        </tr>
+        <tr>
+            <td>Fatty Acid 8:0</td>
+            <td>{{ nutrition_info.fatty_acid_8_0 }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'food:ingredients' %}">Back to Ingredients</a>
+
 {% endblock %}
