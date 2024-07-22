@@ -268,63 +268,7 @@ h3 {
     padding: 1rem;
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
 
-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #ffcc99;
-}
-
-.food-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.food-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.food-item h2 {
-    margin-top: 0;
-}
-
-.food-item p {
-    margin: 10px 0;
-}
-
-.intro-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-.intro-list li {
-    margin-right: 20px;
-}
-
-.icon-image {
-    width: 50px;
-    height: 50px;
-}
-
-.icon-text {
-    display: inline;
-    font-family: 'Arizonia', cursive;
-}
 
 
 

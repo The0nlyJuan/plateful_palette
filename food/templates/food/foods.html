@@ -2,13 +2,11 @@
 
 {% block body %}
     <h2>Foods You Can Make</h2>
-    <div class="food-container">
+    <ul>
         {% for food, counts in foods %}
-            <div class="food-item">
-                <h2><a href="{% url "food:food_item" food %}">{{ food }}</a></h2>
-                <p><strong>Missing Ingredients:</strong> {{ counts.missing_ingredients }}</p>
-                <p><strong>Description:</strong> {{ counts.description }}</p>
-            </div>
+            <li>
+                <a href="{% url "food:food_item" food %}">{{food}}</a>
+            </li>
         {% endfor %}
-    </div>
+    </ul>
 {% endblock %}
