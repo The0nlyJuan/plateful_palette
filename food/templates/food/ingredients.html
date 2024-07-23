@@ -23,12 +23,16 @@
             {% for item in ingredients %}
                 <li>{{ item.ingredient.ingredient.name }}</li>
                 <!-- Dropdown for each ingredient variation -->
-                <select name="ingredient_variation">
-                    {% for variation in item.variations %}
-                        
-                        <option value="{{ variation.ingredient_description }}">{{ variation.ingredient_description }}</option>
-                    {% endfor %}
-                </select>
+                <form action="{% url 'food:nutrition' %}" method="post"> 
+                    {% csrf_token %}
+                    <select name="ingredient_variation">
+                        {% for variation in item.variations %}
+                            <option value="{{ variation.id }}">{{ variation.description }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Click here to see the nutrition</button>
+                </form>
+                
                 <!-- delete button-->
                 <form action="{% url 'food:delete' item.ingredient.ingredient.name %}" method="post" style="display: inline;">
                     {% csrf_token %}

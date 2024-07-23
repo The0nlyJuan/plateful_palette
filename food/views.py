@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import requests
 from Levenshtein import distance
+import re
 
 
 def get_foods_for_ingredient(ingredient):
@@ -155,17 +156,71 @@ def format_table(table):
     return "\n".join(formatted_table)
 
 def search_ingredient_by_name(ingredient_name):
-    print(ingredient_name)
     matches = Nutrition.objects.filter(ingredient_description_first__icontains=ingredient_name)
-    print(matches)
     if not matches.exists():
-        print(matches)
         matches = Nutrition.objects.filter(ingredient_description_second__icontains=ingredient_name)
     if not matches.exists():
-        print(matches)
         matches = Nutrition.objects.filter(ingredient_description_third__icontains=ingredient_name)
-    df = pd.DataFrame(list(matches.values()))
-    return df
+    match_values = list(matches.values('pk', 'ingredient_description'))
+
+    # Combine ids and descriptions into a list of dictionaries
+    variations = [{'id': match['pk'], 'description': match['ingredient_description']} for match in match_values]
+    
+    print(variations)
+    return variations
+
+def fetch_nutritional_data(query):
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
+    headers = {
+        'x-app-id': "53a454b3",
+        'x-app-key': "4371285aacc1cc0fbc6442107b2d1e8c",
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'query': query
+    }
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+    
+def parse_and_sum_nutritionix_response(response):
+    if 'foods' not in response:
+        return {}
+
+    total_nutrition_info = {
+        'calories': 0,
+        'total_fat': 0,
+        'saturated_fat': 0,
+        'cholesterol': 0,
+        'sodium': 0,
+        'total_carbohydrate': 0,
+        'dietary_fiber': 0,
+        'sugars': 0,
+        'protein': 0,
+        'potassium': 0,
+        'phosphorus': 0
+    }
+
+    for food_data in response['foods']:
+        total_nutrition_info['calories'] += food_data.get('nf_calories', 0) or 0
+        total_nutrition_info['total_fat'] += food_data.get('nf_total_fat', 0) or 0
+        total_nutrition_info['saturated_fat'] += food_data.get('nf_saturated_fat', 0) or 0
+        total_nutrition_info['cholesterol'] += food_data.get('nf_cholesterol', 0) or 0
+        total_nutrition_info['sodium'] += food_data.get('nf_sodium', 0) or 0
+        total_nutrition_info['total_carbohydrate'] += food_data.get('nf_total_carbohydrate', 0) or 0
+        total_nutrition_info['dietary_fiber'] += food_data.get('nf_dietary_fiber', 0) or 0
+        total_nutrition_info['sugars'] += food_data.get('nf_sugars', 0) or 0
+        total_nutrition_info['protein'] += food_data.get('nf_protein', 0) or 0
+        total_nutrition_info['potassium'] += food_data.get('nf_potassium', 0) or 0
+        total_nutrition_info['phosphorus'] += food_data.get('nf_p', 0) or 0
+
+    for key in total_nutrition_info:
+        total_nutrition_info[key] = round(total_nutrition_info[key], 2)
+
+    return total_nutrition_info
+
 
 # Create your views here.
 @login_required
@@ -223,6 +278,7 @@ def add(request):
         form = IngredientForm(request.POST)
         if form.is_valid():
             ingredient = form.save()
+
             return redirect('search_nutritional_info', ingredient_id=ingredient.id)
     else:
         form = IngredientForm()
@@ -247,52 +303,19 @@ def ingredients(request):
 
         return redirect('food:ingredients')
 
+
     return render(request, "food/ingredients.html", {
         'ingredients': [
             {
                 'ingredient': ui,
-                'variations': search_ingredient_by_name(ui.ingredient.name)  # Assuming get_variations() returns a list of variations
+                'variations': search_ingredient_by_name(ui.ingredient.name),
             }
             for ui in user_ingredients
         ],
         'all_ingredients': all_ingredients,
     })
 
-@login_required
-def ingredients(request):
-    all_ingredients = Ingredient.objects.all()
-    user_ingredients = UserIngredient.objects.filter(user=request.user)
 
-    if request.method == 'POST':
-        ingredient_name = request.POST.get('name')
-
-        # Check if the ingredient is already in user's ingredients
-        if user_ingredients.filter(ingredient__name=ingredient_name).exists():
-            return redirect('food:ingredients')  # Do nothing if it exists
-
-        # Check if the ingredient is in all ingredients
-        if all_ingredients.filter(name=ingredient_name).exists():
-            ingredient = all_ingredients.get(name=ingredient_name)
-            UserIngredient.objects.get_or_create(user=request.user, ingredient=ingredient)
-
-        return redirect('food:ingredients')
-
-    # Prepare the context with variations for each user ingredient
-    ingredients_with_variations = []
-    for ui in user_ingredients:
-        variations_df = search_ingredient_by_name(ui.ingredient.name)
-        variations_dict = variations_df.to_dict(orient='records')  # Convert DataFrame to list of dicts
-        ingredients_with_variations.append({
-            'ingredient': ui,
-            'variations': variations_dict
-        })
-
-    context = {
-        'ingredients': ingredients_with_variations,
-        'all_ingredients': all_ingredients,
-    }
-
-    return render(request, "food/ingredients.html", context)
 
 
 @login_required
@@ -324,32 +347,83 @@ def delete(request, name):
         ingredient.delete()
     return redirect('food:ingredients')
 
+def preprocess_ingredients(ingredients):
+    cleaned_ingredients = []
+    for sublist in ingredients:
+        for item in sublist:
+            if not item.startswith("="):
+                cleaned_item = re.sub(r'\[\[.*?\|(.*?)\]\]', r'\1', item)  # Remove Wikibook formatting
+                cleaned_item = cleaned_item.replace("*", "").strip()  # Remove '*' and extra spaces
+                cleaned_ingredients.append(cleaned_item)
+    return cleaned_ingredients
+
+
+def replace_ranges_with_averages(ingredients):
+    def calculate_average_with_unit(match):
+        start, end, unit = match.groups()
+        start, end = int(start), int(end)
+        average = (start + end) // 2
+        return f"{average} {unit}"
+
+    def calculate_average_without_unit(match):
+        start, end = match.groups()
+        start, end = int(start), int(end)
+        average = (start + end) // 2
+        return str(average)
+
+    # Patterns for ranges with and without units
+    pattern_with_unit = re.compile(r'(\d+)\s*[-–]\s*(\d+)\s*(g)')
+    pattern_without_unit = re.compile(r'(\d+)\s*[-–]\s*(\d+)\s*(?!g)')
+
+    updated_ingredients = []
+    for ingredient in ingredients:
+        ingredient = pattern_with_unit.sub(calculate_average_with_unit, ingredient)
+        ingredient = pattern_without_unit.sub(calculate_average_without_unit, ingredient)
+        updated_ingredients.append(ingredient)
+
+    return updated_ingredients
+
 @login_required
 def food_item(request, name):
     title = f"Cookbook:{name.replace(' ', '_')}"
     content = fetch_wikibook_content(title)
     if content:
         ingredients, procedures, notes = extract_information(content)
+        cleaned_ingredients = preprocess_ingredients(ingredients)
+        cleaned_ingredients = replace_ranges_with_averages(cleaned_ingredients)
+        cleaned_ingredients = "\n".join(cleaned_ingredients)
+        nutritional_data = fetch_nutritional_data(cleaned_ingredients)
+        nutritional_data = parse_and_sum_nutritionix_response(nutritional_data)
+        print(nutritional_data)
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": ingredients,
             "procedures": procedures,
-            "notes": notes
+            "notes": notes,
+            "nutritional_data": nutritional_data
         })
     else:
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": [],
             "procedures": [],
-            "notes": []
+            "notes": [],
+            "nutritional_data":{}
         })
 
 @login_required
-def nutrition(request, name):
-    ingredients = search_ingredient_by_name(name)
-    return render(request, "food/nutrition.html",{
-        "ingredients": ingredients["ingredient_description"].values.tolist()
-    })
+def nutrition(request):
+    if request.method == "POST":
+        id = request.POST.get("ingredient_variation")
+        nutrition_info = get_object_or_404(Nutrition, pk=id)
+        
+        # Render the nutrition information to a template
+        return render(request, 'food/nutrition.html', {
+            'nutrition_info': nutrition_info,
+        })
+    else:
+        # Handle GET request if needed, otherwise, redirect or show an error
+        return redirect('food:ingredients')
 """
 
 class NewIngredientsForm(forms.Form):
