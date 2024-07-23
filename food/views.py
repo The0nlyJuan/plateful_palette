@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from .models import Ingredient, UserIngredient, Food, Nutrition
 import pandas as pd
-from .forms import IngredientForm, NutritionForm, AddUserIngredientForm, UserSuggestion
+from .forms import IngredientForm, NutritionForm, AddUserIngredientForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import requests
@@ -279,12 +279,6 @@ def add(request):
         if form.is_valid():
             ingredient = form.save()
 
-            # Add or update UserSuggestion
-            user_suggestion, created = UserSuggestion.objects.get_or_create(user=request.user, ingredient=ingredient)
-            if not created:
-                user_suggestion.count += 1
-                user_suggestion.save()
-
             return redirect('search_nutritional_info', ingredient_id=ingredient.id)
     else:
         form = IngredientForm()
@@ -363,6 +357,32 @@ def preprocess_ingredients(ingredients):
                 cleaned_ingredients.append(cleaned_item)
     return cleaned_ingredients
 
+
+def replace_ranges_with_averages(ingredients):
+    def calculate_average_with_unit(match):
+        start, end, unit = match.groups()
+        start, end = int(start), int(end)
+        average = (start + end) // 2
+        return f"{average} {unit}"
+
+    def calculate_average_without_unit(match):
+        start, end = match.groups()
+        start, end = int(start), int(end)
+        average = (start + end) // 2
+        return str(average)
+
+    # Patterns for ranges with and without units
+    pattern_with_unit = re.compile(r'(\d+)\s*[-–]\s*(\d+)\s*(g)')
+    pattern_without_unit = re.compile(r'(\d+)\s*[-–]\s*(\d+)\s*(?!g)')
+
+    updated_ingredients = []
+    for ingredient in ingredients:
+        ingredient = pattern_with_unit.sub(calculate_average_with_unit, ingredient)
+        ingredient = pattern_without_unit.sub(calculate_average_without_unit, ingredient)
+        updated_ingredients.append(ingredient)
+
+    return updated_ingredients
+
 @login_required
 def food_item(request, name):
     title = f"Cookbook:{name.replace(' ', '_')}"
@@ -370,10 +390,11 @@ def food_item(request, name):
     if content:
         ingredients, procedures, notes = extract_information(content)
         cleaned_ingredients = preprocess_ingredients(ingredients)
-        cleaned_ingredients = ", ".join(cleaned_ingredients)
-        print(cleaned_ingredients)
+        cleaned_ingredients = replace_ranges_with_averages(cleaned_ingredients)
+        cleaned_ingredients = "\n".join(cleaned_ingredients)
         nutritional_data = fetch_nutritional_data(cleaned_ingredients)
         nutritional_data = parse_and_sum_nutritionix_response(nutritional_data)
+        print(nutritional_data)
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": ingredients,
