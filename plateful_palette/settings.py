@@ -91,9 +91,11 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+
 NUTRITIONIX_API_KEY = '4371285aacc1cc0fbc6442107b2d1e8c'
 NUTRITIONIX_APP_ID = '53a454b3'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
