@@ -4,11 +4,12 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from .models import Ingredient, UserIngredient, Food, Nutrition
 import pandas as pd
-from .forms import IngredientForm, NutritionForm, AddUserIngredientForm
+from .forms import IngredientForm, NutritionForm, AddUserIngredientForm, UserSuggestion
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import requests
 from Levenshtein import distance
+import re
 
 
 def get_foods_for_ingredient(ingredient):
@@ -168,6 +169,57 @@ def search_ingredient_by_name(ingredient_name):
     print(variations)
     return variations
 
+def fetch_nutritional_data(query):
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
+    headers = {
+        'x-app-id': "53a454b3",
+        'x-app-key': "4371285aacc1cc0fbc6442107b2d1e8c",
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'query': query
+    }
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+    
+def parse_and_sum_nutritionix_response(response):
+    if 'foods' not in response:
+        return {}
+
+    total_nutrition_info = {
+        'calories': 0,
+        'total_fat': 0,
+        'saturated_fat': 0,
+        'cholesterol': 0,
+        'sodium': 0,
+        'total_carbohydrate': 0,
+        'dietary_fiber': 0,
+        'sugars': 0,
+        'protein': 0,
+        'potassium': 0,
+        'phosphorus': 0
+    }
+
+    for food_data in response['foods']:
+        total_nutrition_info['calories'] += food_data.get('nf_calories', 0) or 0
+        total_nutrition_info['total_fat'] += food_data.get('nf_total_fat', 0) or 0
+        total_nutrition_info['saturated_fat'] += food_data.get('nf_saturated_fat', 0) or 0
+        total_nutrition_info['cholesterol'] += food_data.get('nf_cholesterol', 0) or 0
+        total_nutrition_info['sodium'] += food_data.get('nf_sodium', 0) or 0
+        total_nutrition_info['total_carbohydrate'] += food_data.get('nf_total_carbohydrate', 0) or 0
+        total_nutrition_info['dietary_fiber'] += food_data.get('nf_dietary_fiber', 0) or 0
+        total_nutrition_info['sugars'] += food_data.get('nf_sugars', 0) or 0
+        total_nutrition_info['protein'] += food_data.get('nf_protein', 0) or 0
+        total_nutrition_info['potassium'] += food_data.get('nf_potassium', 0) or 0
+        total_nutrition_info['phosphorus'] += food_data.get('nf_p', 0) or 0
+
+    for key in total_nutrition_info:
+        total_nutrition_info[key] = round(total_nutrition_info[key], 2)
+
+    return total_nutrition_info
 
 
 # Create your views here.
@@ -226,6 +278,13 @@ def add(request):
         form = IngredientForm(request.POST)
         if form.is_valid():
             ingredient = form.save()
+
+            # Add or update UserSuggestion
+            user_suggestion, created = UserSuggestion.objects.get_or_create(user=request.user, ingredient=ingredient)
+            if not created:
+                user_suggestion.count += 1
+                user_suggestion.save()
+
             return redirect('search_nutritional_info', ingredient_id=ingredient.id)
     else:
         form = IngredientForm()
@@ -294,24 +353,41 @@ def delete(request, name):
         ingredient.delete()
     return redirect('food:ingredients')
 
+def preprocess_ingredients(ingredients):
+    cleaned_ingredients = []
+    for sublist in ingredients:
+        for item in sublist:
+            if not item.startswith("="):
+                cleaned_item = re.sub(r'\[\[.*?\|(.*?)\]\]', r'\1', item)  # Remove Wikibook formatting
+                cleaned_item = cleaned_item.replace("*", "").strip()  # Remove '*' and extra spaces
+                cleaned_ingredients.append(cleaned_item)
+    return cleaned_ingredients
+
 @login_required
 def food_item(request, name):
     title = f"Cookbook:{name.replace(' ', '_')}"
     content = fetch_wikibook_content(title)
     if content:
         ingredients, procedures, notes = extract_information(content)
+        cleaned_ingredients = preprocess_ingredients(ingredients)
+        cleaned_ingredients = ", ".join(cleaned_ingredients)
+        print(cleaned_ingredients)
+        nutritional_data = fetch_nutritional_data(cleaned_ingredients)
+        nutritional_data = parse_and_sum_nutritionix_response(nutritional_data)
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": ingredients,
             "procedures": procedures,
-            "notes": notes
+            "notes": notes,
+            "nutritional_data": nutritional_data
         })
     else:
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": [],
             "procedures": [],
-            "notes": []
+            "notes": [],
+            "nutritional_data":{}
         })
 
 @login_required

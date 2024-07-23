@@ -94,6 +94,17 @@ class UserIngredient(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.ingredient.ingredient_description}"
     
+class UserSuggestion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    count = models.IntegerField()
+
+    class Meta:
+        unique_together = ('user', 'ingredient')  # Ensures each user can only have each ingredient once
+
+    def __str__(self):
+        return f"{self.user.username} - {self.ingredient.ingredient_description}"
+    
 class Food(models.Model):
     title = models.CharField(max_length=255)
     ingredients = models.ManyToManyField('Ingredient', related_name='foods')

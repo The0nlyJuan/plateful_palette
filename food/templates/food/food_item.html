@@ -12,8 +12,8 @@
                     {% for item in sublist %}
                         {% if item|startswith:"=" %}
                         <h4> {{item| cookbook| header}}</h4>
-                        {% else%}
-                        <li><h6>{{item | cookbook| ingredient}}</h3></li>
+                        {% else %}
+                        <li><h6>{{item | cookbook| ingredient}}</h6></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -23,12 +23,11 @@
     <div class="section mt-4">
         <h2>Procedures</h2>
         {% for sublist in procedures %}
-            
                 <ol>
                     {% for step in sublist %}
                         {% if step|startswith:"=" %}
                         <h4> {{step| cookbook| header}}</h4>
-                        {% else%}
+                        {% else %}
                         <li><h6>{{step | cookbook| procedure}}</h6></li>
                         {% endif %}
                     {% endfor %}
@@ -42,11 +41,35 @@
             {% for item in notes %}
                 {% if item|startswith:"=" %}
                 <h4> {{item| cookbook| header}}</h4>
-                {% else%}
+                {% else %}
                 <li><h6>{{item | cookbook| ingredient}}</h6></li>
                 {% endif %}
             {% endfor %}
         </ul>
+    </div>
+
+    <div class="section mt-4">
+        <h2>Nutritional Information</h2>
+        {% if nutritional_data %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nutrient</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in nutritional_data.items %}
+                <tr>
+                    <td>{{ key|title }}</td>
+                    <td>{{ value }} g</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No nutritional information available.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
