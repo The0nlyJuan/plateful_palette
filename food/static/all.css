@@ -268,7 +268,48 @@ h3 {
     padding: 1rem;
 }
 
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffcc99;
+}
+
+.food-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.food-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.food-item img.food-image {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.food-item h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.food-item p {
+    margin: 10px 0;
+}
 
 
 

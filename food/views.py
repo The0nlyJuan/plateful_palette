@@ -318,26 +318,20 @@ def ingredients(request):
 
 
 
-@login_required
 def foods(request):
     user_ingredients = UserIngredient.objects.filter(user=request.user)
-    foods = {}
+    foods = []
     
     for user_ingredient in user_ingredients:
         food_titles = get_foods_for_ingredient(user_ingredient.ingredient.name)
         for food_title in food_titles:
             cleaned_food = food_title.replace("Cookbook:", "").replace("_", " ")
-            if cleaned_food in foods:
-                foods[cleaned_food] += 1
-            else:
-                foods[cleaned_food] = 1
+            if cleaned_food not in foods:
+                foods.append(cleaned_food)
     
-    sorted_foods = sorted(foods.items(), key=lambda x: x[1], reverse=True)[:10]
-
     return render(request, "food/foods.html", {
-        "foods": sorted_foods
+        "foods": foods
     })
-
 
 @login_required
 def delete(request, name):
@@ -383,7 +377,6 @@ def replace_ranges_with_averages(ingredients):
 
     return updated_ingredients
 
-@login_required
 def food_item(request, name):
     title = f"Cookbook:{name.replace(' ', '_')}"
     content = fetch_wikibook_content(title)
@@ -394,7 +387,6 @@ def food_item(request, name):
         cleaned_ingredients = "\n".join(cleaned_ingredients)
         nutritional_data = fetch_nutritional_data(cleaned_ingredients)
         nutritional_data = parse_and_sum_nutritionix_response(nutritional_data)
-        print(nutritional_data)
         return render(request, "food/food_item.html", {
             "name": name,
             "ingredients": ingredients,
@@ -408,7 +400,7 @@ def food_item(request, name):
             "ingredients": [],
             "procedures": [],
             "notes": [],
-            "nutritional_data":{}
+            "nutritional_data": {}
         })
 
 @login_required
@@ -488,3 +480,4 @@ def add(request):
 
 
 """
+
