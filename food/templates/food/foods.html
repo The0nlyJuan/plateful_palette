@@ -1,12 +1,18 @@
 {% extends "food/layout.html" %}
 
 {% block body %}
-    <h2>Foods You Can Make</h2>
-    <div class="food-container">
-        {% for food in foods %}
-            <div class="food-item">
-                <h3><a href="{% url 'food:food_item' name=food %}">{{ food }}</a></h3>
-            </div>
-        {% endfor %}
+    <div class="container">
+        <h1>Foods You Can Make</h1>
+        <div class="food-container">
+            {% for food in foods %}
+                {% if food %}
+                    <a href="{% url 'food:food_item' food %}" class="food-item-link">
+                        <div class="food-item">
+                            <h3>{{ food }}</h3>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

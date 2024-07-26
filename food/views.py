@@ -318,6 +318,7 @@ def ingredients(request):
 
 
 
+@login_required
 def foods(request):
     user_ingredients = UserIngredient.objects.filter(user=request.user)
     foods = []
@@ -326,8 +327,11 @@ def foods(request):
         food_titles = get_foods_for_ingredient(user_ingredient.ingredient.name)
         for food_title in food_titles:
             cleaned_food = food_title.replace("Cookbook:", "").replace("_", " ")
-            if cleaned_food not in foods:
+            if cleaned_food and cleaned_food not in foods:
                 foods.append(cleaned_food)
+    
+    # Limit to top 20 foods
+    foods = foods[:20]
     
     return render(request, "food/foods.html", {
         "foods": foods

@@ -1,29 +1,69 @@
+/* General styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffcc99;
+}
+
+/* Food container styles */
+.food-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.food-item-link {
+    text-decoration: none;
+    color: inherit; /* This ensures that the link does not change the text color */
+}
+
+.food-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.food-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.food-item h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #ac00ae; /* Adjust text color inside the boxes */
+}
+
+/* Header styles */
 .icon-image {
     height: 60px;
+    max-width: 100px;
     padding-right: 3rem;
 }
 
 .icon-text {
     display: flex;
     align-items: center;
-    font-size: 40px; /* Adjust size as needed */
-
-    font-family: 'Arizonia', sans-serif; /* Choose a stylish font */ /* !important should be placed before the semicolon */
-    color: rgba(243, 159, 5, 0.932); /* Dark green color for contrast */
-
-    font-weight: bold; /* Bold text */
+    font-size: 40px;
+    font-family: 'Arizonia', sans-serif;
+    color: rgba(243, 159, 5, 0.932);
+    font-weight: bold;
     padding: 0;
     margin: 0;
 }
 
-
-h3{
-    font-weight: normal;
-}
-
-h4{
-    font-weight: normal;
-}
 nav {
     font-size: 120%;
     padding: 0;
@@ -84,6 +124,7 @@ nav a:hover {
     }
 }
 
+/* Other styles */
 .ingredient-table {
     display: flex;
     justify-content: center;
@@ -140,11 +181,11 @@ nav a:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#about p{
+#about p {
     margin-bottom: 1rem;
 }
 
-#about a{
+#about a {
     text-decoration-line: none;
     border-width: 2px;
     background-color: blue;
@@ -175,7 +216,12 @@ nav a:hover {
 img {
     height: auto;
     border-radius: 10px;
-    width: 60%;
+    max-width: 100%; /* Ensure images don't overflow their containers */
+    max-height: 500px; /* Set a maximum height for images */
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .text-content {
@@ -232,84 +278,46 @@ h3 {
     font-size: 90%;
 }
 
-.welcome{
+.welcome {
     justify-items: center;
     text-align: center;
     align-items: center;
     font-size: 120%;
 }
 
-.welcome h1{
+.welcome h1 {
     margin-top: 1rem;
-    margin-bottom:0;
+    margin-bottom: 0;
 }
 
-.welcome p{
+.welcome p {
     font-size: 100%;
     font-style: italic;
     color: rgb(249, 164, 178);
     font-weight: 140;
-    margin: 0 ;
+    margin: 0;
 }
 
-.intro-template{
+.intro-template {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 
-.intro-template h4{
+.intro-template h4 {
     font-weight: normal;
 }
 
-.intro-template article{
+.intro-template article {
     margin: 1rem;
     background-color: pink;
     border-radius: 1rem;
     padding: 1rem;
 }
 
-body {
+h1 {
+    text-align: center;
     font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    color: #f57970; /* Adjust color as needed */
+    margin-bottom: 20px;
+    font-size: 2em; /* Adjust size as needed */
 }
-
-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #ffcc99;
-}
-
-.food-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.food-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.food-item img.food-image {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.food-item h3 {
-    margin-top: 10px;
-    font-size: 1.2em;
-}
-
-.food-item p {
-    margin: 10px 0;
-}
-
-
-
