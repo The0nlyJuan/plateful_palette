@@ -180,21 +180,23 @@ def search_ingredient_by_name(ingredient_name):
 def fetch_nutritional_data(query):
     url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
     headers = {
-        'x-app-id': "53a454b3",
-        'x-app-key': "4371285aacc1cc0fbc6442107b2d1e8c",
+        'x-app-id': "3ca95e27",
+        'x-app-key': "96b8251cd05642682d9ceba27cbe58e5",
         'Content-Type': 'application/json'
     }
     data = {
         'query': query
     }
-    response = requests.post(url, headers=headers, json=data)
-    if response.status_code == 200:
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
         return response.json()
-    else:
+    except requests.RequestException as e:
+        print(f"API request failed: {e}")
         return None
     
 def parse_and_sum_nutritionix_response(response):
-    if 'foods' not in response:
+    if response is None or 'foods' not in response:
         return {}
 
     total_nutrition_info = {
@@ -211,7 +213,7 @@ def parse_and_sum_nutritionix_response(response):
         'phosphorus': 0
     }
 
-    for food_data in response['foods']:
+    for food_data in response.get('foods', []):
         total_nutrition_info['calories'] += food_data.get('nf_calories', 0) or 0
         total_nutrition_info['total_fat'] += food_data.get('nf_total_fat', 0) or 0
         total_nutrition_info['saturated_fat'] += food_data.get('nf_saturated_fat', 0) or 0
@@ -501,8 +503,8 @@ def add(request):
 def fetch_food_image(query):
     url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
     headers = {
-        'x-app-id': "cd4669b1",  # Your Nutritionix app ID
-        'x-app-key': "d0035d1ec68e6365495ae86e7b766a2b",  # Your Nutritionix API key
+        'x-app-id': "3ca95e27",  # Your Nutritionix app ID
+        'x-app-key': "96b8251cd05642682d9ceba27cbe58e5",  # Your Nutritionix API key
         'Content-Type': 'application/json'
     }
     data = {
