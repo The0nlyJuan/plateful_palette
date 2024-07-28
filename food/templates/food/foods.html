@@ -1,18 +1,21 @@
 {% extends "food/layout.html" %}
-
+{% load static %}
 {% block body %}
-    <div class="container">
-        <h1>Foods You Can Make</h1>
-        <div class="food-container">
-            {% for food in foods %}
-                {% if food %}
-                    <a href="{% url 'food:food_item' food %}" class="food-item-link">
-                        <div class="food-item">
-                            <h3>{{ food }}</h3>
-                        </div>
-                    </a>
+<div class="container">
+    <h1 class="mt-4">Foods You Can Make</h1>
+    <div class="food-container">
+        {% for food in foods %}
+        <a href="{% url 'food:food_item' food.title %}">
+            <div class="food-item">
+                {% if food.image_url %}
+                <img src="{{ food.image_url }}" class="food-image" alt="{{ food.title }}">
+                {% else %}
+                <img src="{% static 'default_food_image.jpg' %}" class="food-image" alt="{{ food.title }}">
                 {% endif %}
-            {% endfor %}
-        </div>
+                <h3>{{ food.title }}</h3>
+            </div>
+        </a>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

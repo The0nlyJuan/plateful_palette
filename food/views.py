@@ -40,8 +40,16 @@ def get_foods_for_ingredient(ingredient):
             foods = ingredient_obj.foods.all()
         else:
             print(f"Failed to get data for ingredient: {ingredient}")
-    
-    return [food.title for food in foods]
+
+    food_details = []
+    for food in foods:
+        image_url = fetch_food_image(food.title.replace("Cookbook:", "").replace("_", " "))
+        food_details.append({
+            "title": food.title.replace("Cookbook:", "").replace("_", " "),
+            "image_url": image_url
+        })
+
+    return food_details
     
 def fetch_wikibook_content(title):
     url = "https://en.wikibooks.org/w/api.php"
@@ -321,20 +329,23 @@ def ingredients(request):
 @login_required
 def foods(request):
     user_ingredients = UserIngredient.objects.filter(user=request.user)
-    foods = []
-    
+    food_details = []
+
     for user_ingredient in user_ingredients:
-        food_titles = get_foods_for_ingredient(user_ingredient.ingredient.name)
-        for food_title in food_titles:
-            cleaned_food = food_title.replace("Cookbook:", "").replace("_", " ")
-            if cleaned_food and cleaned_food not in foods:
-                foods.append(cleaned_food)
-    
-    # Limit to top 20 foods
-    foods = foods[:20]
-    
+        food_details += get_foods_for_ingredient(user_ingredient.ingredient.name)
+
+    # Get the top 20 unique foods
+    unique_food_details = []
+    titles = set()
+    for food in food_details:
+        if food["title"] not in titles:
+            unique_food_details.append(food)
+            titles.add(food["title"])
+        if len(unique_food_details) == 20:
+            break
+
     return render(request, "food/foods.html", {
-        "foods": foods
+        "foods": unique_food_details
     })
 
 @login_required
@@ -381,6 +392,7 @@ def replace_ranges_with_averages(ingredients):
 
     return updated_ingredients
 
+@login_required
 def food_item(request, name):
     title = f"Cookbook:{name.replace(' ', '_')}"
     content = fetch_wikibook_content(title)
@@ -485,3 +497,20 @@ def add(request):
 
 """
 
+
+def fetch_food_image(query):
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
+    headers = {
+        'x-app-id': "cd4669b1",  # Your Nutritionix app ID
+        'x-app-key': "d0035d1ec68e6365495ae86e7b766a2b",  # Your Nutritionix API key
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'query': query
+    }
+    response = requests.post(url, headers=headers, json=data)
+    if response.status_code == 200:
+        data = response.json()
+        if 'foods' in data:
+            return data['foods'][0].get('photo', {}).get('thumb', '')
+    return None
