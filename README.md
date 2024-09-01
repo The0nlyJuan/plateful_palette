@@ -1,16 +1,3 @@
-# plateful-palette
-
-Home page
-![alt text](image-2.png)
-Log in page
-![alt text](image-3.png)
-
-Add ingredients page
-![alt text](image.png)
-![alt text](image-1.png)
-
-Got alert when logged out
-![alt text](image-4.png)
 
 # 🍽️ Plateful Palette
 
@@ -35,10 +22,6 @@ Got alert when logged out
 - **Comprehensive Nutritional Info**: View detailed nutritional information for each recipe, helping you stay on track with your health goals.
   
 - **Ingredient Expansion**: Get recommendations for new ingredients that can turn your basic ingredients into gourmet meals.
-  
-- **Meal Planning**: Plan your meals for the week and generate a categorized shopping list to streamline your grocery shopping.
-  
-- **Community Engagement**: Share recipes, participate in challenges, and connect with other food enthusiasts.
 
 ## 🛠️ Technical Overview
 
@@ -64,10 +47,6 @@ Plateful Palette is built using a robust tech stack that ensures a smooth and re
 
 3. **Nutritional Information**: For each recipe, the app pulls detailed nutritional data from the Nutritionix API and displays it to the user.
 
-4. **Meal Planning & Grocery List**: Users can plan their meals using a drag-and-drop interface. The app then generates a categorized shopping list based on the selected recipes.
-
-5. **Community Features**: Users can share recipes, rate others, and engage with the community through challenges and discussions.
-
 ### 🧩 System Architecture
 
 - **Frontend**: The user interface is built using HTML, CSS, and JavaScript, ensuring a smooth and responsive user experience.
@@ -86,3 +65,18 @@ Plateful Palette is built using a robust tech stack that ensures a smooth and re
    ```bash
    git clone https://github.com/yourusername/plateful-palette.git
    cd plateful-palette
+
+# plateful-palette
+
+Home page
+![alt text](image-2.png)
+Log in page
+![alt text](image-3.png)
+
+Add ingredients page
+![alt text](image.png)
+![alt text](image-1.png)
+
+Got alert when logged out
+![alt text](image-4.png)
+
