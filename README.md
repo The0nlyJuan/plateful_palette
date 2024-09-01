@@ -66,5 +66,18 @@ Plateful Palette is built using a robust tech stack that ensures a smooth and re
    git clone https://github.com/yourusername/plateful-palette.git
    cd plateful-palette
 
+## Some images of our products:
+1. **Home page**
+![alt text](image-6.png)
 
+2. **Food page**
+![alt text](image-5.png)
+
+3. **Ingredient page**
+![alt text](image-7.png)
+
+4. **Food recipe page**
+![alt text](image-8.png)
+![alt text](image-9.png)
+![alt text](image-10.png)
 
