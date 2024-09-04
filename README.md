@@ -66,6 +66,10 @@ Plateful Palette is built using a robust tech stack that ensures a smooth and re
    git clone https://github.com/yourusername/plateful-palette.git
    cd plateful-palette
 
+2. **Run the webapp**:
+   ```bash
+   python manage.py runserver
+
 ## Some images of our products:
 1. **Home page**
 ![alt text](image-6.png)
